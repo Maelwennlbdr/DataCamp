@@ -94,7 +94,7 @@ with col2:
 with col3:
     image_base64 = get_base64_of_image("images/food.png")
     st.markdown(f"""
-        <a href="#Food\ selection" style="text-decoration: none;">
+        <a href="#Food-selection" style="text-decoration: none;">
             <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
             <h3 class='markdown-text' style='text-align: center'>Food Selection</h3>
         </a>
@@ -155,6 +155,9 @@ with col2:
 import streamlit as st
 import requests
 
+# Partie 5
+import requests
+
 # Clé d'API pour Spoonacular (à remplacer par ta propre clé)
 api_key = "0e85d9946e0f45d3a9df7ef93302aef1"
 
@@ -205,6 +208,12 @@ def get_recipes_for_diet_and_calories(diet, calories):
     data = response.json()
     return data['results']
 
+# Fonction pour obtenir les détails de la recette
+def get_recipe_details(recipe_id):
+    url = f"https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={api_key}"
+    response = requests.get(url)
+    data = response.json()
+    return data
 
 # Si un régime ou une tranche de calories sont sélectionnés, afficher les recettes correspondantes
 if selected_calories:
@@ -214,15 +223,37 @@ if selected_calories:
     # Afficher les recettes dans une grille
     col1, col2, col3 = st.columns(3)
     for idx, recipe in enumerate(recipes):
+        recipe_id = recipe['id']
         if idx % 3 == 0:
             with col1:
                 st.image(recipe['image'], caption=recipe['title'])
+                if st.button(f"View Recipe {idx + 1}", key=f"button_{idx}"):
+                    details = get_recipe_details(recipe_id)
+                    with st.expander(f"Recipe Details for {recipe['title']}"):
+                        st.image(details['image'], caption=details['title'])
+                        st.write(f"**Servings**: {details['servings']}")
+                        st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
+                        st.write(details['instructions'] if details['instructions'] else "No instructions available.")
         elif idx % 3 == 1:
             with col2:
                 st.image(recipe['image'], caption=recipe['title'])
+                if st.button(f"View Recipe {idx + 1}", key=f"button_{idx}"):
+                    details = get_recipe_details(recipe_id)
+                    with st.expander(f"Recipe Details for {recipe['title']}"):
+                        st.image(details['image'], caption=details['title'])
+                        st.write(f"**Servings**: {details['servings']}")
+                        st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
+                        st.write(details['instructions'] if details['instructions'] else "No instructions available.")
         else:
             with col3:
                 st.image(recipe['image'], caption=recipe['title'])
+                if st.button(f"View Recipe {idx + 1}", key=f"button_{idx}"):
+                    details = get_recipe_details(recipe_id)
+                    with st.expander(f"Recipe Details for {recipe['title']}"):
+                        st.image(details['image'], caption=details['title'])
+                        st.write(f"**Servings**: {details['servings']}")
+                        st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
+                        st.write(details['instructions'] if details['instructions'] else "No instructions available.")
 
 # Partie 6
 
@@ -231,7 +262,7 @@ import streamlit as st
 import requests
 
 # Titre principal
-st.markdown("<h1 style='color: #F2E8CF;'>Food selection</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: #F2E8CF;'>Food-selection</h1>", unsafe_allow_html=True)
 
 # Dictionnaire pour stocker les sélections
 selected_foods = {
