@@ -94,7 +94,7 @@ with col2:
 with col3:
     image_base64 = get_base64_of_image("images/food.png")
     st.markdown(f"""
-        <a href="#Food selection" style="text-decoration: none;">
+        <a href="#Food\ selection" style="text-decoration: none;">
             <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
             <h3 class='markdown-text' style='text-align: center'>Food Selection</h3>
         </a>
@@ -151,22 +151,15 @@ with col2:
     # Afficher l'image dans la première colonne
     st.image(image, use_column_width=True)
 
-
 # Partie 5
-
+import streamlit as st
 import requests
 
 # Clé d'API pour Spoonacular (à remplacer par ta propre clé)
-api_key = "0be0be1639214b32986215885a44cde0"
-url = f"https://api.spoonacular.com/recipes/complexSearch?query=diet&number=6&apiKey={api_key}"
+api_key = "0e85d9946e0f45d3a9df7ef93302aef1"
 
-
-def get_recipes(query):
-    url = f"https://api.spoonacular.com/recipes/complexSearch?query={query}&number=6&apiKey={api_key}"
-    response = requests.get(url)
-    data = response.json()
-    return data['results']
-
+# Interface de l'application
+st.markdown("<h1 style='color: #F2E8CF'>Recipes</h1>", unsafe_allow_html=True)
 
 # Régimes alimentaires disponibles dans l'API Spoonacular
 diet_options = [
@@ -178,14 +171,12 @@ diet_options = [
 # Nouvelles tranches de calories
 calorie_options = ["Moins de 200", "200-500", "500-700", "Plus de 700"]
 
-# Interface de l'application
-st.markdown("<h2>Recipes</h2>", unsafe_allow_html=True)
+# Organiser les filtres en menus déroulants
+with st.expander("Select a diet (optional)"):
+    selected_diet = st.selectbox("", diet_options)
 
-# Sélection des régimes alimentaires avec une option "None"
-selected_diet = st.selectbox("Select a diet (optional)", diet_options)
-
-# Sélection des calories
-selected_calories = st.selectbox("Select a calorie range", calorie_options)
+with st.expander("Select a calorie range"):
+    selected_calories = st.selectbox("", calorie_options)
 
 
 # Fonction pour appeler l'API Spoonacular et obtenir des recettes en fonction du régime et des calories
@@ -217,8 +208,9 @@ def get_recipes_for_diet_and_calories(diet, calories):
 
 # Si un régime ou une tranche de calories sont sélectionnés, afficher les recettes correspondantes
 if selected_calories:
-    st.subheader(f"Recipes with {selected_calories} calories")
+    st.markdown(f"<h3 style='color: #F2E8CF'>Recipes with {selected_calories} calories</h3>", unsafe_allow_html=True)
     recipes = get_recipes_for_diet_and_calories(selected_diet.lower(), selected_calories)
+
     # Afficher les recettes dans une grille
     col1, col2, col3 = st.columns(3)
     for idx, recipe in enumerate(recipes):
@@ -232,6 +224,124 @@ if selected_calories:
             with col3:
                 st.image(recipe['image'], caption=recipe['title'])
 
+# Partie 6
+
+# Partie 7
+import streamlit as st
+import requests
+
+# Titre principal
+st.markdown("<h1 style='color: #F2E8CF;'>Food selection</h1>", unsafe_allow_html=True)
+
+# Dictionnaire pour stocker les sélections
+selected_foods = {
+    "Vegetables": [],
+    "Protein (Meat & Plant-Based)": [],
+    "Grains": [],
+    "Fruits": [],
+    "Nuts & Seeds": [],
+    "Seafood": [],
+    "Dairy": [],
+    "Legumes": [],
+    "Cuisines": [],
+    "Meal Types": [],
+    "Diets": []
+}
+
+# Utiliser des menus déroulants pour organiser les filtres
+with st.expander("Vegetables"):
+    for i, vegetable in enumerate(["Carrot", "Broccoli", "Spinach", "Kale", "Bell Peppers", "Zucchini"]):
+        if st.checkbox(vegetable, key=f'vegetable_{i}'):
+            selected_foods["Vegetables"].append(vegetable)
+
+with st.expander("Protein (Meat & Plant-Based)"):
+    for i, protein in enumerate(["Chicken", "Lentils", "Tofu", "Beef", "Pork", "Eggs"]):
+        if st.checkbox(protein, key=f'protein_{i}'):
+            selected_foods["Protein (Meat & Plant-Based)"].append(protein)
+
+with st.expander("Grains"):
+    for i, grain in enumerate(["Rice", "Quinoa", "Oats", "Barley", "Couscous"]):
+        if st.checkbox(grain, key=f'grain_{i}'):
+            selected_foods["Grains"].append(grain)
+
+with st.expander("Fruits"):
+    for i, fruit in enumerate(["Apple", "Banana", "Orange", "Blueberries", "Strawberries", "Mango"]):
+        if st.checkbox(fruit, key=f'fruit_{i}'):
+            selected_foods["Fruits"].append(fruit)
+
+with st.expander("Nuts & Seeds"):
+    for i, nut_seed in enumerate(["Almonds", "Chia seeds", "Sunflower seeds", "Cashews", "Peanuts"]):
+        if st.checkbox(nut_seed, key=f'nut_seed_{i}'):
+            selected_foods["Nuts & Seeds"].append(nut_seed)
+
+with st.expander("Seafood"):
+    for i, seafood in enumerate(["Salmon", "Shrimp", "Tuna", "Cod", "Scallops"]):
+        if st.checkbox(seafood, key=f'seafood_{i}'):
+            selected_foods["Seafood"].append(seafood)
+
+with st.expander("Dairy"):
+    for i, dairy in enumerate(["Milk", "Cheese", "Yogurt", "Butter", "Cream"]):
+        if st.checkbox(dairy, key=f'dairy_{i}'):
+            selected_foods["Dairy"].append(dairy)
+
+with st.expander("Legumes"):
+    for i, legume in enumerate(["Chickpeas", "Black beans", "Green peas", "Lentils", "Soybeans"]):
+        if st.checkbox(legume, key=f'legume_{i}'):
+            selected_foods["Legumes"].append(legume)
+
+with st.expander("Cuisines"):
+    for i, cuisine in enumerate(["Italian", "Mexican", "Chinese", "Indian", "French", "Japanese"]):
+        if st.checkbox(cuisine, key=f'cuisine_{i}'):
+            selected_foods["Cuisines"].append(cuisine)
+
+with st.expander("Meal Types"):
+    for i, meal in enumerate(["Breakfast", "Lunch", "Dinner", "Snack", "Dessert"]):
+        if st.checkbox(meal, key=f'meal_{i}'):
+            selected_foods["Meal Types"].append(meal)
+
+with st.expander("Diets"):
+    for i, diet in enumerate(["Gluten Free", "Ketogenic", "Vegetarian", "Vegan", "Paleo", "Pescatarian"]):
+        if st.checkbox(diet, key=f'diet_{i}'):
+            selected_foods["Diets"].append(diet)
+
+
+# Fonction pour appeler l'API Spoonacular en fonction des aliments sélectionnés
+def get_recipes_based_on_foods(selected_foods):
+    # Combine toutes les sélections d'ingrédients dans une chaîne de caractères
+    ingredients = []
+    for category, items in selected_foods.items():
+        ingredients.extend(items)
+
+    # Créer une chaîne avec les ingrédients séparés par des virgules
+    ingredient_query = ','.join(ingredients)
+
+    # Faire une requête à l'API pour obtenir les recettes basées sur les ingrédients
+    if ingredient_query:
+        url = f"https://api.spoonacular.com/recipes/findByIngredients?ingredients={ingredient_query}&number=6&apiKey={api_key}"
+        response = requests.get(url)
+        data = response.json()
+        return data
+    else:
+        return []
+
+
+# Si l'utilisateur a sélectionné des aliments, appeler l'API et afficher les résultats
+if any(selected_foods.values()):  # Vérifier si des aliments ont été sélectionnés
+    st.subheader("Selected Recipes")
+    recipes = get_recipes_based_on_foods(selected_foods)
+
+    # Afficher les recettes dans une grille
+    col1, col2, col3 = st.columns(3)
+    for idx, recipe in enumerate(recipes):
+        if idx % 3 == 0:
+            with col1:
+                st.image(recipe['image'], caption=recipe['title'])
+        elif idx % 3 == 1:
+            with col2:
+                st.image(recipe['image'], caption=recipe['title'])
+        else:
+            with col3:
+                st.image(recipe['image'], caption=recipe['title'])
 
 # Fermer la div principale
 st.markdown('</div>', unsafe_allow_html=True)
