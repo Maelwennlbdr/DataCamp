@@ -1,62 +1,62 @@
 import streamlit as st
+import requests
 
 # Activer la mise en page large
 st.set_page_config(layout="wide")
 
-# Définir un style personnalisé
-custom_style = """
+# Ajouter un style CSS pour changer la couleur de fond, la couleur du texte et le style des images
+st.markdown("""
     <style>
-    .custom-style {
+    .main {
         background-color: #386641;
-        padding: 20px;
-        border-radius: 10px;
-        color: white;
-        margin-bottom: 20px;
-        text-align: center;
+        color: #F2E8CF;
     }
-    .custom-style img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 5px;
-        margin-top: 10px;
+    .markdown-text {
+        color: #F2E8CF;
     }
     </style>
-"""
+    """, unsafe_allow_html=True)
 
-# Injecter le style CSS dans la page
-st.markdown(custom_style, unsafe_allow_html=True)
+# Appliquer la classe de style principale
+st.markdown('<div class="main">', unsafe_allow_html=True)
 
-# Section Table of Contents stylisée
-st.markdown("""
-    <div class='custom-style'>
-        <h2>Table of Contents</h2>
-        <div style='display: flex; justify-content: space-around;'>
-            <div>
-                <img src='images/recipes.png' alt='Recipes'>
-                <h3>Recipes</h3>
-            </div>
-            <div>
-                <img src='images/mealPlan.png' alt='Meal Planning'>
-                <h3>Meal Planning</h3>
-            </div>
-            <div>
-                <img src='images/food.png' alt='Food Selection'>
-                <h3>Food Selection</h3>
-            </div>
+# Table of contents section
+st.markdown("<h1 class='markdown-text', style='text-align: center'>Table of Contents</h1>", unsafe_allow_html=True)
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.image("images/recipes.png", use_column_width=True, clamp=True)
+    st.markdown("<h3 class='markdown-text', style='text-align: center'>Recipes</h3>", unsafe_allow_html=True)
+with col2:
+    st.image("images/mealPlan.png", use_column_width=True, clamp=True)
+    st.markdown("<h3 class='markdown-text', style='text-align: center'>Meal Planning</h3>", unsafe_allow_html=True)
+with col3:
+    st.image("images/food.png", use_column_width=True, clamp=True)
+    st.markdown("<h3 class='markdown-text', style='text-align: center'>Food Selection</h3>", unsafe_allow_html=True)
+
+col21, col22 = st.columns(2)  # Colonne 1 plus large que colonne 2
+with col21:
+    # Centrer l'image avec un style CSS
+    st.markdown("""
+        <div style="text-align: center;">
+            <img src="images/about.png" style="width: 50%; max-width: 300px; height: auto;" />
         </div>
-    </div>
     """, unsafe_allow_html=True)
 
-# Section About stylisée
-st.markdown("""
-    <div class='custom-style'>
-        <h2>About PlateMate</h2>
-        <p>The goal of PlateMate is to simplify daily meal management by providing 
-        a visual, easy-to-use meal planner for healthy eating, along with precise 
-        calculations of calories for each meal.</p>
-        <p>Users will be able to filter recipes according to their dietary preferences 
-        and health concerns, including vegetarian, low-carb, and gluten-free options. 
-        PlateMate provides a wide selection of nutritious, balanced recipes that 
-        cater to all kinds of dietary requirements.</p>
-    </div>
+with col22:
+    st.markdown("<h2 class='markdown-text'>About PlateMate</h2>", unsafe_allow_html=True)
+    st.markdown("""
+    <span class='markdown-text'>
+    The goal of PlateMate is to simplify daily meal management by providing 
+    a visual, easy-to-use meal planner for healthy eating, along with precise 
+    calculations of calories for each meal.
+    Users will be able to filter recipes according to their dietary preferences 
+    and health concerns, including vegetarian, low-carb, and gluten-free options. 
+    PlateMate provides a wide selection of nutritious, balanced recipes that 
+    cater to all kinds of dietary requirements.
+    </span>
     """, unsafe_allow_html=True)
+
+
+
+# Fermer la div principale
+st.markdown('</div>', unsafe_allow_html=True)
