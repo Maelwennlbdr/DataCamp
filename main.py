@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import base64
-api_key = "0be0be1639214b32986215885a44cde0"
+api_key = "6a782f6af3be4da4afb16a74a23e316f"
 # Activer la mise en page large
 st.set_page_config(layout="wide")
 
@@ -302,15 +302,17 @@ if selected_calories:
             st.image(recipe['image'], use_column_width=True)
             st.markdown(f"<h4 class='recipe-title'>{recipe['title']}</h4>", unsafe_allow_html=True)
 
-            if st.button(f"View Recipe {idx + 1}", key=f"button_{idx}"):
-                # Obtenir les détails de la recette et les afficher dans un expander
-                details = get_recipe_details(recipe_id)
-                with st.expander(f"Recipe Details for {recipe['title']}"):
-                    st.image(details['image'], caption=details['title'])
-                    st.write(f"**Servings**: {details['servings']}")
-                    st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
-                    instructions = details['instructions'] if details['instructions'] else "No instructions available."
-                    st.write(instructions)
+            details = get_recipe_details(recipe_id)
+            with st.expander(f"Recipe Details for {recipe['title']}"):
+                st.write(f"**Servings**: {details['servings']}")
+                st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
+
+                # Afficher les instructions, en s'assurant qu'elles sont formatées correctement
+                instructions = details['instructions'] if details['instructions'] else "No instructions available."
+
+                # Si les instructions sont en format HTML, utilisez st.markdown
+                st.markdown(instructions, unsafe_allow_html=True)
+
 
 # Partie 6
 import random
