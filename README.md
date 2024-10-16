@@ -10,5 +10,5 @@ PlateMate is a user-friendly meal planning app focused on nutrition. It provides
 - Create weekly meal plans that align with your diet.
 
 ## 2. Technologies   
-Spoonacular API: Provides recipe data, including nutritional info, ingredients, and meal plans.
-Streamlit: Used for building and deploying the app.
+Spoonacular API: Provides recipe data, including nutritional info, ingredients, and meal plans.    
+Streamlit: Used for building and deploying the app.    
