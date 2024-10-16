@@ -534,16 +534,16 @@ if any(selected_foods.values()):  # Vérifier si des aliments ont été sélecti
     for idx, recipe in enumerate(recipes):
         if idx % 3 == 0:
             with col1:
-                st.image(recipe['image'], caption=recipe['title'])
+                st.write(f"• {recipe['title']}")
+                st.image(recipe['image'], use_column_width=True)
         elif idx % 3 == 1:
             with col2:
-                st.image(recipe['image'], caption=recipe['title'])
+                st.write(f"• {recipe['title']}")
+                st.image(recipe['image'], use_column_width=True)
         else:
             with col3:
-                st.image(recipe['image'], caption=recipe['title'])
-
-
-
+                st.write(f"• {recipe['title']}")
+                st.image(recipe['image'], use_column_width=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
