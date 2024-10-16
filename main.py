@@ -42,7 +42,6 @@ st.markdown("""
         background-color: #A7C957;
     }
 
-    
     .button-col {
         display: flex;
         justify-content: center;
@@ -77,6 +76,10 @@ st.markdown("""
     
     .a:hover, a:active {
       background-color: #A7C957;
+    }
+    
+    h1, h2, h3, h4, h5, h6, p, label {
+        color: #F2E8CF !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -314,17 +317,21 @@ import random
 
 # Titre principal
 st.markdown("<div id='meal-planner'></div>", unsafe_allow_html=True)
-st.markdown("<h1 style='text-align: center;'>Meal Planning for the Week</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 class='recipe-title' style='text-align: left;'>Meal Planning for the Week</h1>", unsafe_allow_html=True)
 
 # Sélection du régime alimentaire via un menu déroulant où l'on peut choisir un seul régime
+st.markdown("<p class='recipe-title' style='text-align: left;'>Select a Diet (optional)</p>", unsafe_allow_html=True)
 selected_diet = st.selectbox(
-    "Select a diet (optional)",
+    "",
     ["None", "Gluten Free", "Vegetarian", "Vegan", "Pescetarian"]
 )
 
+
 # Liste des jours de la semaine
+st.markdown("<p class='recipe-title' style='text-align: left;'>Select a Day</p>", unsafe_allow_html=True)
+
 days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-selected_day = st.selectbox("Select a day", days_of_week)
+selected_day = st.selectbox("", days_of_week)
 
 
 # Fonction pour appeler l'API Spoonacular avec le régime sélectionné
@@ -353,49 +360,68 @@ if selected_diet:
         # Obtenir les repas pour le jour sélectionné
         day_meals = meal_plan_data['week'][selected_day.lower()]['meals']
 
-        st.subheader(f"Meal Plan for {selected_day}")
+        st.markdown(f"<h4 class='recipe-title' style='text-align:left'>Meal Plan for {selected_day}</h4>", unsafe_allow_html=True)
 
         # Utiliser trois colonnes pour afficher le petit-déjeuner, le déjeuner et le dîner
         col1, col2, col3 = st.columns(3)
 
         # Afficher le petit-déjeuner dans la première colonne
         with col1:
-            st.markdown("### Breakfast")
+            st.markdown(f"<h3 class='recipe-title'>Breakfast</h3>", unsafe_allow_html=True)
             meal = day_meals[0]
             st.write(f"• {meal['title']}")
             if 'imageType' in meal and meal['imageType']:
                 image_url = f"https://spoonacular.com/recipeImages/{meal['id']}-312x231.{meal['imageType']}"
-                st.image(image_url, caption=meal['title'], use_column_width=True)
+                st.image(image_url, use_column_width=True)
             else:
                 st.write("No image available.")
             st.write(f"Ready in: {meal['readyInMinutes']} minutes" if 'readyInMinutes' in meal else "")
-            st.write(f"[View Recipe]({meal['sourceUrl']})")
+            st.markdown(f"""
+                            <p style='text-align: center;'>
+                                <a href="{meal['sourceUrl']}" class="a">
+                                    View Recipe
+                                </a>
+                            </p>
+                            """, unsafe_allow_html=True)
 
         # Afficher le déjeuner dans la deuxième colonne
         with col2:
-            st.markdown("### Lunch")
+            st.markdown(f"<h3 class='recipe-title'>Lunch</h3>", unsafe_allow_html=True)
             meal = day_meals[1]
             st.write(f"• {meal['title']}")
             if 'imageType' in meal and meal['imageType']:
                 image_url = f"https://spoonacular.com/recipeImages/{meal['id']}-312x231.{meal['imageType']}"
-                st.image(image_url, caption=meal['title'], use_column_width=True)
+                st.image(image_url, use_column_width=True)
             else:
                 st.write("No image available.")
             st.write(f"Ready in: {meal['readyInMinutes']} minutes" if 'readyInMinutes' in meal else "")
-            st.write(f"[View Recipe]({meal['sourceUrl']})")
+            st.markdown(f"""
+                <p style='text-align: center;'>
+                    <a href="{meal['sourceUrl']}" class="a">
+                        View Recipe
+                    </a>
+                </p>
+                """, unsafe_allow_html=True)
 
         # Afficher le dîner dans la troisième colonne
         with col3:
-            st.markdown("### Dinner")
+            st.markdown(f"<h3 class='recipe-title'>Dinner</h3>", unsafe_allow_html=True)
             meal = day_meals[2]
             st.write(f"• {meal['title']}")
             if 'imageType' in meal and meal['imageType']:
                 image_url = f"https://spoonacular.com/recipeImages/{meal['id']}-312x231.{meal['imageType']}"
-                st.image(image_url, caption=meal['title'], use_column_width=True)
+                st.image(image_url, use_column_width=True)
             else:
                 st.write("No image available.")
             st.write(f"Ready in: {meal['readyInMinutes']} minutes" if 'readyInMinutes' in meal else "")
-            st.write(f"[View Recipe]({meal['sourceUrl']})")
+            st.markdown(f"""
+                            <p style='text-align: center;'>
+                                <a href="{meal['sourceUrl']}" class="a">
+                                    View Recipe
+                                </a>
+                            </p>
+                            """, unsafe_allow_html=True)
+
 
     else:
         st.write("No meal plan data available. Please try different filters.")
