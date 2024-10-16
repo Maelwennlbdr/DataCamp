@@ -4,7 +4,8 @@
 API, Nutrition, Recipes, Calories, Meal Planning, Food, Streamlit
 
 ## 1. Overview   
-PlateMate is a user-friendly meal planning app focused on nutrition. It provides a wide selection of recipes based on dietary preferences and calorie needs. The app helps users:   
+PlateMate is a user-friendly meal planning app focused on nutrition. It provides a wide selection of recipes based on dietary preferences and calorie needs.    
+The app helps users:      
 - Find 6 recipes tailored to your diet and calorie range.   
 - Discover recipes based on specific ingredients.   
 - Create weekly meal plans that align with your diet.   
