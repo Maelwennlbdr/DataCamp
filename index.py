@@ -23,18 +23,20 @@ st.markdown("""
         display: flex;
         justify-content: center;
         margin-top: 20px;
+        height: 100px; /* Ajuster la hauteur pour centrer les boutons */
     }
     .stButton>button {
         background-color: #6A994E;
         color: #FFFFFF;
         border-radius: 15px;
-        padding: 10px 30px;
+        padding: 10px;  /* Padding vertical */
         margin: 0 10px;
         font-size: 18px;
         border: none;
         transition: background-color 0.3s ease;
         cursor: pointer;
-        height: 50px;  /* Hauteur fixe pour les boutons */
+        height: 100%; /* Remplir toute la hauteur de la colonne */
+        width: 100%; /* Remplir toute la largeur de la colonne */
     }
     .stButton>button:hover {
         background-color: #A7C957;
