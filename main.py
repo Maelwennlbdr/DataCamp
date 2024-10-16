@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import base64
-
+api_key = "0be0be1639214b32986215885a44cde0"
 # Activer la mise en page large
 st.set_page_config(layout="wide")
 
@@ -19,7 +19,65 @@ st.markdown("""
     .markdown-text {
         color: #F2E8CF;
     }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        height: 100px; /* Ajuster la hauteur pour centrer les boutons */
+    }
+    .stButton>button {
+        background-color: #6A994E;
+        color: #FFFFFF;
+        border-radius: 15px;
+        padding: 10px;  /* Padding vertical */
+        margin: 0 10px;
+        font-size: 18px;
+        border: none;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        height: 100%; /* Remplir toute la hauteur de la colonne */
+        width: 100%; /* Remplir toute la largeur de la colonne */
+    }
+    .stButton>button:hover {
+        background-color: #A7C957;
+    }
 
+    
+    .button-col {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;  /* Assurez-vous que la hauteur est suffisante */
+        vertical-align: center;
+        text-align: center;
+    }
+    
+    .recipe-title {
+        color: #F2E8CF;
+        text-align: center;
+    }
+    .image-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;  /* Pour assurer un bon alignement */
+    }
+    .recipe {
+        margin: 10px;  /* Espacement entre les recettes */
+    }
+    
+    .a:link, .a:visited {
+      background-color: #6A994E;
+      color: #F2E8CF;
+      padding: 14px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .a:hover, a:active {
+      background-color: #A7C957;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -31,6 +89,7 @@ image_path = "images/photo1.png"
 image_base64 = get_base64_of_image(image_path)
 
 # CSS pour positionner le texte correctement au centre de l'image avec une police plus grande
+# Section d'en-tête avec l'image et le titre
 st.markdown(
     f"""
     <style>
@@ -57,6 +116,19 @@ st.markdown(
     .centered-text span {{
         font-size: 32px;  /* Augmenter la taille de la police pour le sous-titre */
     }}
+    .button {{
+        background-color: #6A994E;
+        color: #FFFFFF;
+        border-radius: 15px;
+        padding: 10px;  /* Padding vertical */
+        margin: 0 10px;
+        font-size: 18px;
+        border: none;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        height: 100%; /* Remplir toute la hauteur de la colonne */
+        width: 100%; /* Remplir toute la largeur de la colonne */
+    }}
     </style>
 
     <div class="image-container">
@@ -69,37 +141,35 @@ st.markdown(
     """, unsafe_allow_html=True
 )
 
-# Table of contents section
+# Section de la table des matières
 st.markdown("<h1 class='markdown-text' style='text-align: center'>Table of Contents</h1>", unsafe_allow_html=True)
 col1, col2, col3 = st.columns(3)
 
 with col1:
     image_base64 = get_base64_of_image("images/recipes.png")
     st.markdown(f"""
-        <a href="#recipes" style="text-decoration: none;">
-            <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
-            <h3 class='markdown-text' style='text-align: center'>Recipe</h3>
-        </a>
+        <a href="#recipes" class="a">
+        <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
+        \nRecipe</a>
     """, unsafe_allow_html=True)
 
 with col2:
     image_base64 = get_base64_of_image("images/mealPlan.png")
     st.markdown(f"""
-        <a href="#Meal Planner" style="text-decoration: none;">
-            <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
-            <h3 class='markdown-text' style='text-align: center'>Meal Planning</h3>
-        </a>
+        <a href="#meal-planner" class="a">
+        <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
+        \nMeal Planning</a>
     """, unsafe_allow_html=True)
 
 with col3:
     image_base64 = get_base64_of_image("images/food.png")
     st.markdown(f"""
-        <a href="#food-selection" style="text-decoration: none;">
-            <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
-            <h3 class='markdown-text' style='text-align: center'>Food Selection</h3>
-        </a>
+        <a href="#food-selection" class="a">
+        <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
+        \nFood Selection</a>
     """, unsafe_allow_html=True)
 
+st.markdown("\n\n\n")
 
 # Charger l'image
 image_path = "images/about.png"
@@ -132,6 +202,7 @@ with col22:
 
 
 st.markdown("\n\n")
+
 # Partie 4
 
 # Charger l'image
@@ -155,9 +226,10 @@ with col2:
 import requests
 
 # Clé d'API pour Spoonacular (à remplacer par ta propre clé)
-api_key = "0e85d9946e0f45d3a9df7ef93302aef1"
+
 
 # Interface de l'application
+st.markdown("<div id='recipes'></div>", unsafe_allow_html=True)
 st.markdown("<h1 style='color: #F2E8CF'>Recipes</h1>", unsafe_allow_html=True)
 
 # Régimes alimentaires disponibles dans l'API Spoonacular
@@ -216,48 +288,122 @@ if selected_calories:
     st.markdown(f"<h3 style='color: #F2E8CF'>Recipes with {selected_calories} calories</h3>", unsafe_allow_html=True)
     recipes = get_recipes_for_diet_and_calories(selected_diet.lower(), selected_calories)
 
-    # Afficher les recettes dans une grille
-    col1, col2, col3 = st.columns(3)
+    # Créer autant de colonnes que de recettes à afficher (ici 3 pour la mise en page)
+    cols = st.columns(3)
+
     for idx, recipe in enumerate(recipes):
         recipe_id = recipe['id']
-        if idx % 3 == 0:
-            with col1:
-                st.image(recipe['image'], caption=recipe['title'])
-                if st.button(f"View Recipe {idx + 1}", key=f"button_{idx}"):
-                    details = get_recipe_details(recipe_id)
-                    with st.expander(f"Recipe Details for {recipe['title']}"):
-                        st.image(details['image'], caption=details['title'])
-                        st.write(f"**Servings**: {details['servings']}")
-                        st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
-                        st.write(details['instructions'] if details['instructions'] else "No instructions available.")
-        elif idx % 3 == 1:
-            with col2:
-                st.image(recipe['image'], caption=recipe['title'])
-                if st.button(f"View Recipe {idx + 1}", key=f"button_{idx}"):
-                    details = get_recipe_details(recipe_id)
-                    with st.expander(f"Recipe Details for {recipe['title']}"):
-                        st.image(details['image'], caption=details['title'])
-                        st.write(f"**Servings**: {details['servings']}")
-                        st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
-                        st.write(details['instructions'] if details['instructions'] else "No instructions available.")
-        else:
-            with col3:
-                st.image(recipe['image'], caption=recipe['title'])
-                if st.button(f"View Recipe {idx + 1}", key=f"button_{idx}"):
-                    details = get_recipe_details(recipe_id)
-                    with st.expander(f"Recipe Details for {recipe['title']}"):
-                        st.image(details['image'], caption=details['title'])
-                        st.write(f"**Servings**: {details['servings']}")
-                        st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
-                        st.write(details['instructions'] if details['instructions'] else "No instructions available.")
+        col_index = idx % 3  # Détermine la colonne à utiliser
+
+        with cols[col_index]:
+            st.image(recipe['image'], use_column_width=True)
+            st.markdown(f"<h4 class='recipe-title'>{recipe['title']}</h4>", unsafe_allow_html=True)
+
+            if st.button(f"View Recipe {idx + 1}", key=f"button_{idx}"):
+                # Obtenir les détails de la recette et les afficher dans un expander
+                details = get_recipe_details(recipe_id)
+                with st.expander(f"Recipe Details for {recipe['title']}"):
+                    st.image(details['image'], caption=details['title'])
+                    st.write(f"**Servings**: {details['servings']}")
+                    st.write(f"**Ready in**: {details['readyInMinutes']} minutes")
+                    instructions = details['instructions'] if details['instructions'] else "No instructions available."
+                    st.write(instructions)
 
 # Partie 6
-
-# Partie 7
-import streamlit as st
-import requests
+import random
 
 # Titre principal
+st.markdown("<div id='meal-planner'></div>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Meal Planning for the Week</h1>", unsafe_allow_html=True)
+
+# Sélection du régime alimentaire via un menu déroulant où l'on peut choisir un seul régime
+selected_diet = st.selectbox(
+    "Select a diet (optional)",
+    ["None", "Gluten Free", "Vegetarian", "Vegan", "Pescetarian"]
+)
+
+# Liste des jours de la semaine
+days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+selected_day = st.selectbox("Select a day", days_of_week)
+
+
+# Fonction pour appeler l'API Spoonacular avec le régime sélectionné
+def get_meal_plan(diet):
+    # Construire l'URL pour l'API
+    url = f"https://api.spoonacular.com/mealplanner/generate?apiKey={api_key}&timeFrame=week"
+
+    # Ajouter le régime à la requête s'il est sélectionné
+    if diet and diet != "None":
+        url += f"&diet={diet.lower()}"
+
+    # Ajouter un paramètre aléatoire pour que l'API retourne des résultats variés
+    url += f"&random={random.randint(1, 1000)}"
+
+    # Faire la requête à l'API
+    response = requests.get(url)
+    return response.json()
+
+
+# Si un régime est sélectionné, obtenir le plan de repas correspondant
+if selected_diet:
+    meal_plan_data = get_meal_plan(selected_diet)
+
+    # Vérification des résultats
+    if meal_plan_data and 'week' in meal_plan_data:
+        # Obtenir les repas pour le jour sélectionné
+        day_meals = meal_plan_data['week'][selected_day.lower()]['meals']
+
+        st.subheader(f"Meal Plan for {selected_day}")
+
+        # Utiliser trois colonnes pour afficher le petit-déjeuner, le déjeuner et le dîner
+        col1, col2, col3 = st.columns(3)
+
+        # Afficher le petit-déjeuner dans la première colonne
+        with col1:
+            st.markdown("### Breakfast")
+            meal = day_meals[0]
+            st.write(f"• {meal['title']}")
+            if 'imageType' in meal and meal['imageType']:
+                image_url = f"https://spoonacular.com/recipeImages/{meal['id']}-312x231.{meal['imageType']}"
+                st.image(image_url, caption=meal['title'], use_column_width=True)
+            else:
+                st.write("No image available.")
+            st.write(f"Ready in: {meal['readyInMinutes']} minutes" if 'readyInMinutes' in meal else "")
+            st.write(f"[View Recipe]({meal['sourceUrl']})")
+
+        # Afficher le déjeuner dans la deuxième colonne
+        with col2:
+            st.markdown("### Lunch")
+            meal = day_meals[1]
+            st.write(f"• {meal['title']}")
+            if 'imageType' in meal and meal['imageType']:
+                image_url = f"https://spoonacular.com/recipeImages/{meal['id']}-312x231.{meal['imageType']}"
+                st.image(image_url, caption=meal['title'], use_column_width=True)
+            else:
+                st.write("No image available.")
+            st.write(f"Ready in: {meal['readyInMinutes']} minutes" if 'readyInMinutes' in meal else "")
+            st.write(f"[View Recipe]({meal['sourceUrl']})")
+
+        # Afficher le dîner dans la troisième colonne
+        with col3:
+            st.markdown("### Dinner")
+            meal = day_meals[2]
+            st.write(f"• {meal['title']}")
+            if 'imageType' in meal and meal['imageType']:
+                image_url = f"https://spoonacular.com/recipeImages/{meal['id']}-312x231.{meal['imageType']}"
+                st.image(image_url, caption=meal['title'], use_column_width=True)
+            else:
+                st.write("No image available.")
+            st.write(f"Ready in: {meal['readyInMinutes']} minutes" if 'readyInMinutes' in meal else "")
+            st.write(f"[View Recipe]({meal['sourceUrl']})")
+
+    else:
+        st.write("No meal plan data available. Please try different filters.")
+else:
+    st.write("Please select a diet to generate a meal plan.")
+
+# Titre principal
+st.markdown("<div id='food-selection'></div>", unsafe_allow_html=True)
 st.markdown("<h1 style='color: #F2E8CF' id='food-selection'>Food-selection</h1>", unsafe_allow_html=True)
 
 # Dictionnaire pour stocker les sélections
@@ -370,5 +516,8 @@ if any(selected_foods.values()):  # Vérifier si des aliments ont été sélecti
             with col3:
                 st.image(recipe['image'], caption=recipe['title'])
 
-# Fermer la div principale
+
+
+
 st.markdown('</div>', unsafe_allow_html=True)
+
