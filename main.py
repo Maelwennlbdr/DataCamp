@@ -94,7 +94,7 @@ with col2:
 with col3:
     image_base64 = get_base64_of_image("images/food.png")
     st.markdown(f"""
-        <a href="#Food-selection" style="text-decoration: none;">
+        <a href="#food-selection" style="text-decoration: none;">
             <img src="data:image/png;base64,{image_base64}" style='border-radius: 25px; max-width: 100%; height: auto;'>
             <h3 class='markdown-text' style='text-align: center'>Food Selection</h3>
         </a>
@@ -150,10 +150,6 @@ with col1:
 with col2:
     # Afficher l'image dans la première colonne
     st.image(image, use_column_width=True)
-
-# Partie 5
-import streamlit as st
-import requests
 
 # Partie 5
 import requests
@@ -262,7 +258,7 @@ import streamlit as st
 import requests
 
 # Titre principal
-st.markdown("<h1 style='color: #F2E8CF;'>Food-selection</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: #F2E8CF' id='food-selection'>Food-selection</h1>", unsafe_allow_html=True)
 
 # Dictionnaire pour stocker les sélections
 selected_foods = {
