@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import base64
-api_key = "6a782f6af3be4da4afb16a74a23e316f"
+api_key = "0e85d9946e0f45d3a9df7ef93302aef1"
 
 st.set_page_config(layout="wide")
 
